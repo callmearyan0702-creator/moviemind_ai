@@ -2,10 +2,13 @@ import streamlit as st
 import joblib
 import re
 import nltk
+from nltk.corpus import stopwords
+
 try:
-    nltk.data.find('corpora/stopwords')
-except LookupError:
-    nltk.download('stopwords')
+    STOP_WORDS = set(stopwords.words("english"))
+except:
+    nltk.download("stopwords")
+    STOP_WORDS = set(stopwords.words("english"))  
 from nltk.stem import PorterStemmer
 
 # Load model and vectorizer
@@ -30,10 +33,11 @@ def removeschar(text):
     return text
 
 def removestopwords(text):
-    stop_words = set(stopwords.words('english'))
+
     return " ".join(
-        [word for word in text.split()
-         if word.lower() not in stop_words]
+        word
+        for word in text.split()
+        if word.lower() not in STOP_WORDS
     )
 
 def stemming(text):
