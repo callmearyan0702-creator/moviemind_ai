@@ -1,7 +1,11 @@
 import streamlit as st
 import joblib
 import re
-from nltk.corpus import stopwords
+import nltk
+try:
+    nltk.data.find('corpora/stopwords')
+except LookupError:
+    nltk.download('stopwords')
 from nltk.stem import PorterStemmer
 
 # Load model and vectorizer
